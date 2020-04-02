@@ -10,7 +10,6 @@ const appName = `whatsapp-dark`;
 mySpawn('node', 
 [
   './node_modules/nativefier7/lib/cli.js', 
-  "https://web.whatsapp.com",
   '-e',
   '7.1.11',
   '--inject',
@@ -18,6 +17,7 @@ mySpawn('node',
   '--single-instance',
   '--name',
   appName,
+  "https://web.whatsapp.com",
   appName
 ]).on('close', function(code) {
   postInstall(appName);

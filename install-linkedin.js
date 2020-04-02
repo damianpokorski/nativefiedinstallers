@@ -8,16 +8,17 @@ const appName = `linkedin-dark`;
 // Execute process
 mySpawn('node', 
 [
-  './node_modules/nativefier8/lib/cli.js', 
-  'https://www.linkedin.com/messaging/',
+  './node_modules/nativefier7/lib/cli.js', 
   '-e',
-  '8.1.1',
+  '7.1.11',
   '--inject',
   'userstyles/linkedin.js',
   '--single-instance',
   '--name',
   appName,
+  'https://www.linkedin.com/messaging/',
   appName
 ]).on('close', function(code) {
   postInstall(appName);
 });
+
