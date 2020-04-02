@@ -30,12 +30,18 @@ npm run whatsapp
 
 Installing Facebook Messenger
 ```bash
-npm run whatsapp
+npm run messenger
 ```
 
 Installing Linkedin-chat
 ```bash
 npm run linkedin
+```
+
+You can also trigger all the installers in chain by executing
+
+```bash
+npm run all
 ```
 
 # Licensing..?
