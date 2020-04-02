@@ -8,6 +8,8 @@ mySpawn('node', [
   './node_modules/nativefier8/lib/cli.js',
   "https://messenger.com/",
   '--single-instance',
+  '-e',
+  '8.1.1',
   '--inject',
   'userstyles/messenger.js',
   '-u',

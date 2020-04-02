@@ -3,18 +3,17 @@
 const { mySpawn, postInstall } = require('./common');
 
 // Variables
-const appName = `whatsapp-dark`;
-
+const appName = `linkedin-dark`;
 
 // Execute process
 mySpawn('node', 
 [
-  './node_modules/nativefier7/lib/cli.js', 
-  "https://web.whatsapp.com",
+  './node_modules/nativefier8/lib/cli.js', 
+  'https://www.linkedin.com/messaging/',
   '-e',
-  '7.1.11',
+  '8.1.1',
   '--inject',
-  'userstyles/whatsapp.js',
+  'userstyles/linkedin.js',
   '--single-instance',
   '--name',
   appName,

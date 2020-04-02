@@ -4,20 +4,24 @@ Just a quick personal wrapper project for installing my favourite electron apps 
 
 It contains a minalistic set of prompts which allows easy relocation of generated packages, and including them in the binary paths (which makes them integrate quick nicely with the OS)
 
-## About
-This project is using nativefier library
+# About
+This project using following librararies
+* Node.js
+* [Nativefier](https://github.com/jiahaog/nativefier)
+* [Electron - Through nativefier](https://electronjs.org/)
+* [FS-Extra](https://www.npmjs.com/package/fs-extra)
 
-[Nativefier](https://github.com/jiahaog/nativefier)
+And following user styles:
 
-And following user styles.
+* [Dark-WhatsApp by Vednoc](https://userstyles.org/styles/142096)
 
-[Dark-WhatsApp by Vednoc](https://userstyles.org/styles/142096)
+* [Dark Facebook Messenger](https://userstyles.org/styles/173705)
 
-[Dark Facebook Messenger](https://userstyles.org/styles/173705)
+* [linkedin.com dark](https://userstyles.org/styles/158968/linkedin-com-dark)
 
 Actual generated applications are just wrappers for their respective web portals.
 
-## Usage
+# Usage
 
 Installing whatsapp
 ```bash
@@ -28,4 +32,15 @@ Installing Facebook Messenger
 ```bash
 npm run whatsapp
 ```
+
+Installing Linkedin-chat
+```bash
+npm run linkedin
+```
+
+# Licensing..?
+
+None of the software here belongs to me, this is just a collection of scripts which streamline the set-up.
+
+All of the rights belong to the respective owners.
 
