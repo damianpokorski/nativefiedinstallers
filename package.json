@@ -7,6 +7,7 @@
     "whatsapp": "node install-whatsapp.js",
     "messenger": "node install-messenger.js",
     "linkedin": "node install-linkedin.js",
+    "discord": "node install-discord.js",
     "all": "npm run whatsapp && npm run messenger &&  npm run linkedin"
   },
   "author": "Damian Pokorski",

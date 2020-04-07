@@ -38,6 +38,11 @@ Installing Linkedin-chat
 npm run linkedin
 ```
 
+Installing discord
+```bash
+npm run discord
+```
+
 You can also trigger all the installers in chain by executing
 
 ```bash
