@@ -19,6 +19,9 @@ And following user styles:
 
 * [linkedin.com dark](https://userstyles.org/styles/158968/linkedin-com-dark)
 
+* Darker Discord - [Userstyles](https://userstyles.org/styles/143681) | [Github](https://github.com/BakaTekku/Darker_Discord)
+
+
 Actual generated applications are just wrappers for their respective web portals.
 
 # Usage
