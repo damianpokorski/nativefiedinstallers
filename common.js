@@ -4,6 +4,8 @@ const Confirm = require('prompt-confirm');
 const fs = require('fs');
 const fsx = require('fs-extra');
 
+const ezConfirm = (question, skip = false) => skip ? Promise.resolve() : (new Promise((resolve, reject) => (new Confirm(question)).run().then(answer => answer ? resolve() : reject())));
+
 module.exports = {
   mySpawn: (exec, params) => spawn(exec, params, {
     detached:true,
@@ -25,39 +27,28 @@ module.exports = {
 
     const generatedFolderPath = `${generatedDir}/${fs.readdirSync(generatedDir).shift()}`;
 
-    return (new Confirm(`Would you like to create installer? Debian only`))
-      .run()
-      .then(function(yes) {
-        if(!yes) {
-          console.log(`Skipping installer building.`);
-          return;
-        }
-        const installer = require('electron-installer-debian');
-        const options = {
-          src: generatedFolderPath,
-          dest: 'dist/installers/',
-          arch: 'amd64',
-          bin: appName,
-          name: appName,
-          productName: appName,
-          genericName: appName
-        }
-        return installer(options).then(result => {
-          console.log(`Successfully created package in ${options.dest}`)
-        }).catch(err => {
-          console.error(err, err.stack);
-        });
-      }).then(() => {
-        return (new Confirm(`Would you like to  install the app into your home directory ${installPath}`)).ask(function(yes) {
-          if(!yes) {
-            console.log(`Skipping install.`);
-            return;
-          }
-    
+    return ezConfirm(`Would you like to create installer? Debian only`).then(() => {
+      const installer = require('electron-installer-debian');
+      const options = {
+        src: generatedFolderPath,
+        dest: 'dist/installers/',
+        arch: 'amd64',
+        bin: appName,
+        name: appName,
+        productName: appName,
+        genericName: appName
+      }
+      return installer(options).then(result => {
+        console.log(`Successfully created package in ${options.dest}`)
+      }).catch(err => {
+        console.error(err, err.stack);
+      });
+    }).catch(() => console.log(`Skipping installer building.`))
+    .finally(() => {
+      return ezConfirm(`Would you like to  install the app into your home directory ${installPath}`)
+        .then(() => {
           // Remove old version if it doesnt exist
-          console.log(`Checking for previous generated installs ${installRoot}..`);
           if(fs.existsSync(installPath)) {
-            console.log(`Found previous install  (${installRoot}) - removing.`);
             fs.rmdirSync(installPath, {recursive: true });
           }
           
@@ -68,33 +59,23 @@ module.exports = {
     
           // Remove empty folder
           fsx.rmdirSync(generatedDir);
-    
-          // Find binary file
-          const binaryPath = `${installPath}/${fs.readdirSync(installPath).filter(file => file.startsWith(appName)).shift()}`;
-          console.log(binaryPath);
-    
-          return (new Confirm('Would you like to create binary shortcut? (Unix only)')).ask(function(yes) {
-            if (!yes) {
-              return;
-            } 
+        })
+        .finally(() => {
+          return (ezConfirm('Would you like to create binary shortcut? (Unix only)')).then(() =>  {
+            // Find binary file
+            const binaryPath = `${installPath}/${fs.readdirSync(installPath).filter(file => file.startsWith(appName)).shift()}`;
+
             if(!fs.existsSync(binaryLinkPath)) {
-              console.log(`${binaryLinkPath} not found, creating.`)
               fs.mkdirSync(binaryLinkPath, { recursive: true });
             }
     
             if(fs.existsSync(`${binaryLinkPath}/${appName}`)) {
-              console.log(`${binaryLinkPath}/${appName} exists, removing.`)
               fs.unlinkSync(`${binaryLinkPath}/${appName}`);
             }
     
             fs.symlinkSync(binaryPath, `${binaryLinkPath}/${appName}`);
-            console.log(`Shortcut created.`);
           });
-        });
-      })
-
-
-    // Optional install
-    
+        })
+    });
   }
 }
