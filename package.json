@@ -13,6 +13,7 @@
   "author": "Damian Pokorski",
   "license": "ISC",
   "dependencies": {
+    "electron-installer-debian": "^3.1.0",
     "fs-extra": "^9.0.0",
     "nativefier7": "npm:nativefier@^7.7.0",
     "nativefier8": "npm:nativefier@^8.0.0",
