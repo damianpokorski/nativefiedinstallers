@@ -14,10 +14,7 @@ module.exports = {
   postInstall: (appName) => {
     const generatedDir = `${process.cwd()}/${appName}`
     const installRoot = `${homedir}/.nativefier`;
-    const installPath = `${installRoot}/${appName}`;
-    const binaryLinkPath = `${homedir}/.local/bin`;
     
-
     // Base install path
     if (!fs.existsSync(installRoot)) {
       console.log(`${installRoot} not found, creating.`)
@@ -27,7 +24,7 @@ module.exports = {
 
     const generatedFolderPath = `${generatedDir}/${fs.readdirSync(generatedDir).shift()}`;
 
-    return ezConfirm(`Would you like to create installer? Debian only`).then(() => {
+    return ezConfirm(`Would you like to create installer? Debian only`, process.argv.pop() == '-y').then(() => {
       const installer = require('electron-installer-debian');
       const options = {
         src: generatedFolderPath,
@@ -44,38 +41,6 @@ module.exports = {
         console.error(err, err.stack);
       });
     }).catch(() => console.log(`Skipping installer building.`))
-    .finally(() => {
-      return ezConfirm(`Would you like to  install the app into your home directory ${installPath}`)
-        .then(() => {
-          // Remove old version if it doesnt exist
-          if(fs.existsSync(installPath)) {
-            fs.rmdirSync(installPath, {recursive: true });
-          }
-          
-          // Move to install path
-          console.log(`Moving to ${installPath}`);
-    
-          fsx.moveSync(generatedFolderPath, installPath);
-    
-          // Remove empty folder
-          fsx.rmdirSync(generatedDir);
-        })
-        .finally(() => {
-          return (ezConfirm('Would you like to create binary shortcut? (Unix only)')).then(() =>  {
-            // Find binary file
-            const binaryPath = `${installPath}/${fs.readdirSync(installPath).filter(file => file.startsWith(appName)).shift()}`;
-
-            if(!fs.existsSync(binaryLinkPath)) {
-              fs.mkdirSync(binaryLinkPath, { recursive: true });
-            }
-    
-            if(fs.existsSync(`${binaryLinkPath}/${appName}`)) {
-              fs.unlinkSync(`${binaryLinkPath}/${appName}`);
-            }
-    
-            fs.symlinkSync(binaryPath, `${binaryLinkPath}/${appName}`);
-          });
-        })
-    });
+    .catch(() => 'Done');
   }
 }

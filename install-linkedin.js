@@ -10,7 +10,7 @@ mySpawn('node',
 [
   './node_modules/nativefier7/lib/cli.js', 
   '-e',
-  '7.1.11',
+  '9.1.0',
   '--inject',
   'userstyles/linkedin.js',
   '--single-instance',

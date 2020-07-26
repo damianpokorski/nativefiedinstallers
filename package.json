@@ -8,7 +8,8 @@
     "messenger": "node install-messenger.js",
     "linkedin": "node install-linkedin.js",
     "discord": "node install-discord.js",
-    "all": "npm run whatsapp && npm run messenger &&  npm run linkedin"
+    "all": "npm run discord && npm run whatsapp && npm run messenger &&  npm run linkedin",
+    "install_all": "npm run discord -- -y && rm -rf discord-dark && npm run whatsapp -- -y && rm -rf whatsapp-dark && npm run messenger -- -y && rm -rf messenger-dark && npm run linkedin -- -y && rm -rf linkedin-dark && cd dist/installers && sudo dpkg -i *.deb"
   },
   "author": "Damian Pokorski",
   "license": "ISC",
