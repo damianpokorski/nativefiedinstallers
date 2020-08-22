@@ -12,15 +12,7 @@ module.exports = {
     stdio:"inherit"
   }),
   postInstall: (appName) => {
-    const generatedDir = `${process.cwd()}/${appName}`
-    const installRoot = `${homedir}/.nativefier`;
-    
-    // Base install path
-    if (!fs.existsSync(installRoot)) {
-      console.log(`${installRoot} not found, creating.`)
-      fs.mkdirSync(installRoot);
-      
-    }
+    const generatedDir = `${process.cwd()}/${appName}`;
 
     const generatedFolderPath = `${generatedDir}/${fs.readdirSync(generatedDir).shift()}`;
 
@@ -40,7 +32,7 @@ module.exports = {
       }).catch(err => {
         console.error(err, err.stack);
       });
-    }).catch(() => console.log(`Skipping installer building.`))
-    .catch(() => 'Done');
+    }).catch((e) => console.log(`Skipping installer building - ${e}`))
+    .finally(() => 'Done');
   }
 }
